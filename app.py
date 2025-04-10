@@ -4,12 +4,13 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-# Load API Key
-load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+
+# Load API key (use st.secrets on Streamlit Cloud)
+api_key = st.secrets.get("GEMINI_API_KEY")
 if not api_key:
-    st.error("API key not found. Check .env file.")
+    st.error("API key not found. Make sure it's set in Streamlit Secrets.")
     st.stop()
+
 
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-1.5-pro")
